@@ -1,5 +1,6 @@
 package com.andrewcarmichael.fleetio.vehiclelist.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -37,7 +38,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.andrewcarmichael.fleetio.R.drawable
 import com.andrewcarmichael.fleetio.ui.theme.FleetioTheme
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent.NavigateToVehicleDetail
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntentHandler
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
@@ -74,6 +74,7 @@ internal fun VehicleList(
 ) {
     when (uiState) {
         VehicleListViewModel.State.Loading -> Loading(modifier = modifier)
+        VehicleListViewModel.State.Error -> Error(modifier = modifier)
         is VehicleListViewModel.State.Loaded -> Loaded(
             intentHandler = intentHandler,
             uiState = uiState,
@@ -91,6 +92,24 @@ private fun Loading(
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun Error(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Image(
+            painter = painterResource(drawable.ic_error),
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Oh dear something went wrong."
+        )
     }
 }
 
@@ -212,6 +231,14 @@ private fun PreviewLoading() {
             uiState = VehicleListViewModel.State.Loading,
             modifier = Modifier.fillMaxSize(),
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewError() {
+    FleetioTheme {
+        Error(modifier = Modifier.fillMaxSize())
     }
 }
 

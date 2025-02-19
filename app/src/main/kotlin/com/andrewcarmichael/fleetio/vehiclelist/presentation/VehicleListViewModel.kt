@@ -31,11 +31,12 @@ class VehicleListViewModel(
         loadVehicles()
     }
 
+    // TODO update this for pagination etc.
     private fun loadVehicles() {
         viewModelScope.launch {
             vehicleApi.fetchVehicles().fold(
                 onSuccess = { successResponse ->
-                    Log.d(TAG, "loadVehicles: $successResponse")
+                    Log.d(TAG, "loadVehicles success: $successResponse")
                     val models = successResponse.records.map { vehicle ->
                         VehicleModel(
                             id = vehicle.id.toLong(),
@@ -53,7 +54,10 @@ class VehicleListViewModel(
                     }
                 },
                 onFailure = { throwable ->
-                    Log.d(TAG, "loadVehicles: $throwable")
+                    Log.d(TAG, "loadVehicles failure: $throwable")
+                    _uiStateFlow.update {
+                        State.Error
+                    }
                 }
             )
         }
@@ -76,6 +80,9 @@ class VehicleListViewModel(
     sealed interface State {
         @Immutable
         data object Loading : State
+
+        @Immutable
+        data object Error : State
 
         @Immutable
         data class Loaded(
