@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.andrewcarmichael.fleetio.vehicledetail.ui.VehicleDetailScreen
-import com.andrewcarmichael.fleetio.vehicledetail.ui.vehicleDetailScreen
+import com.andrewcarmichael.fleetio.vehiclelist.ui.VehicleDetailScreen
+import com.andrewcarmichael.fleetio.vehiclelist.ui.vehicleDetailScreen
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
 import com.andrewcarmichael.fleetio.vehiclelist.ui.VehicleListScreen
 import com.andrewcarmichael.fleetio.vehiclelist.ui.vehicleListScreen

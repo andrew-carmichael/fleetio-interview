@@ -1,4 +1,4 @@
-package com.andrewcarmichael.fleetio.vehicledetail.ui
+package com.andrewcarmichael.fleetio.vehiclelist.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier

@@ -1,8 +1,8 @@
-package com.andrewcarmichael.fleetio.core.data
+package com.andrewcarmichael.fleetio.vehiclelist.data
 
 import android.util.Log
-import com.andrewcarmichael.fleetio.core.data.models.PaginatedVehiclesResponse
-import com.andrewcarmichael.fleetio.core.data.models.Vehicle
+import com.andrewcarmichael.fleetio.vehiclelist.data.models.PaginatedVehiclesResponse
+import com.andrewcarmichael.fleetio.vehiclelist.data.models.Vehicle
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

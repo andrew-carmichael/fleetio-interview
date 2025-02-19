@@ -15,9 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.andrewcarmichael.fleetio.core.ui.Error
-import com.andrewcarmichael.fleetio.core.ui.Loading
-import com.andrewcarmichael.fleetio.core.ui.VehicleSummary
 import com.andrewcarmichael.fleetio.ui.theme.FleetioTheme
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent.NavigateToVehicleDetail
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntentHandler

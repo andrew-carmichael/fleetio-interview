@@ -1,4 +1,4 @@
-package com.andrewcarmichael.fleetio.core.ui
+package com.andrewcarmichael.fleetio.vehiclelist.ui
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -27,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andrewcarmichael.fleetio.R.drawable
-import com.andrewcarmichael.fleetio.vehiclelist.ui.InfoChip
 
 @Composable
 fun VehicleSummary(

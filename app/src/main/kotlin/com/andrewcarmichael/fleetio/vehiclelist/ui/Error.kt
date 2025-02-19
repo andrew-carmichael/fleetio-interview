@@ -1,4 +1,4 @@
-package com.andrewcarmichael.fleetio.core.ui
+package com.andrewcarmichael.fleetio.vehiclelist.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

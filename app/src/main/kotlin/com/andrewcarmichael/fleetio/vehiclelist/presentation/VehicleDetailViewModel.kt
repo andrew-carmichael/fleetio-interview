@@ -1,11 +1,10 @@
-package com.andrewcarmichael.fleetio.vehicledetail.presentation
+package com.andrewcarmichael.fleetio.vehiclelist.presentation
 
 import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andrewcarmichael.fleetio.core.data.VehicleApi
-import com.andrewcarmichael.fleetio.core.data.models.Vehicle
+import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleStatus
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleType

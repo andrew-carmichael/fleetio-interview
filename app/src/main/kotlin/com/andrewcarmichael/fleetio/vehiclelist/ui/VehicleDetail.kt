@@ -1,4 +1,4 @@
-package com.andrewcarmichael.fleetio.vehicledetail.ui
+package com.andrewcarmichael.fleetio.vehiclelist.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,10 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.andrewcarmichael.fleetio.core.ui.Error
-import com.andrewcarmichael.fleetio.core.ui.Loading
-import com.andrewcarmichael.fleetio.core.ui.VehicleSummary
-import com.andrewcarmichael.fleetio.vehicledetail.presentation.VehicleDetailViewModel
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleDetailViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 

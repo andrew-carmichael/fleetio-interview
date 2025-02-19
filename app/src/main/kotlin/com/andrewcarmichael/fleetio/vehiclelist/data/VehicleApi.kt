@@ -1,7 +1,7 @@
-package com.andrewcarmichael.fleetio.core.data
+package com.andrewcarmichael.fleetio.vehiclelist.data
 
-import com.andrewcarmichael.fleetio.core.data.models.PaginatedVehiclesResponse
-import com.andrewcarmichael.fleetio.core.data.models.Vehicle
+import com.andrewcarmichael.fleetio.vehiclelist.data.models.PaginatedVehiclesResponse
+import com.andrewcarmichael.fleetio.vehiclelist.data.models.Vehicle
 
 interface VehicleApi {
 
