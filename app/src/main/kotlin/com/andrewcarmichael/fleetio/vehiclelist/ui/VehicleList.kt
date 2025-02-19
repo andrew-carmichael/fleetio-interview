@@ -20,7 +20,7 @@ import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent.N
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntentHandler
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListViewModel
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.FakeVehicleData
+import com.andrewcarmichael.fleetio.vehiclelist.domain.model.FakeVehicleData
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel

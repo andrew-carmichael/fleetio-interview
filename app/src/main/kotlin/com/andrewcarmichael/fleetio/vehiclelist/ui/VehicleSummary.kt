@@ -32,7 +32,7 @@ import com.andrewcarmichael.fleetio.R.drawable
 fun VehicleSummary(
     onPressed: () -> Unit,
     vehicleTitle: String,
-    vehicleSubtitle: String,
+    vehicleSubtitle: String?,
     imageModel: Any? = null,
     chips: List<String> = emptyList(),
     modifier: Modifier = Modifier
@@ -72,7 +72,9 @@ fun VehicleSummary(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = vehicleTitle, style = MaterialTheme.typography.titleSmall)
-                Text(text = vehicleSubtitle, style = MaterialTheme.typography.bodySmall)
+                vehicleSubtitle?.let {
+                    Text(text = it, style = MaterialTheme.typography.bodySmall)
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 Row(
                     modifier = Modifier.horizontalScroll(rememberScrollState()),

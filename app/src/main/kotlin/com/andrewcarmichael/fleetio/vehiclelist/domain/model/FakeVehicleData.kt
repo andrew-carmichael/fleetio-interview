@@ -1,4 +1,4 @@
-package com.andrewcarmichael.fleetio.vehiclelist.presentation.model
+package com.andrewcarmichael.fleetio.vehiclelist.domain.model
 
 object FakeVehicleData {
     val vehicles = listOf(

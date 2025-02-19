@@ -6,7 +6,9 @@
     <string name="vehicleStatusActive">Active</string>
     <string name="vehicleStatusInShop">In Shop</string>
     <string name="vehicleStatusOutOfService">Out Of Service</string>
+    <string name="vehicleStatusUnknown">Unknown</string>
     <string name="vehicleTypeCar">Car</string>
     <string name="vehicleTypeVan">Van</string>
     <string name="vehicleTypePickupTruck">Pickup Truck</string>
+    <string name="vehicleTypeUnknown">Unknown</string>
 </resources>

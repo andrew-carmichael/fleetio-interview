@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleStatus
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleType
+import com.andrewcarmichael.fleetio.vehiclelist.domain.FetchVehicles
+import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,7 +16,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class VehicleListViewModel(
-    private val vehicleApi: VehicleApi,
+    private val fetchVehicles: FetchVehicles,
 ) : ViewModel(), VehicleListIntentHandler {
 
     private val _uiStateFlow = MutableStateFlow<State>(State.Loading)
@@ -31,37 +29,23 @@ class VehicleListViewModel(
         loadVehicles()
     }
 
-    // TODO update this for pagination etc.
     private fun loadVehicles() {
         viewModelScope.launch {
-            vehicleApi.fetchVehicles().fold(
-                onSuccess = { successResponse ->
-                    Log.d(TAG, "loadVehicles success: $successResponse")
-                    // TODO this mapping isn't correct exactly
-                    successResponse.records.map { vehicle ->
-                        VehicleModel(
-                            id = vehicle.id.toLong(),
-                            name = vehicle.name,
-                            description = "${vehicle.year} ${vehicle.make} ${vehicle.model}",
-                            imageUrl = vehicle.defaultImageUrlSmall,
-                            type = VehicleType.Car,
-                            status = VehicleStatus.Active
+            _uiStateFlow.update {
+                fetchVehicles().fold(
+                    onSuccess = { vehicles ->
+                        Log.d(TAG, "loadVehicles success: loaded ${vehicles.size}")
+                        State.Loaded(
+                            vehicles = vehicles.toPersistentList(),
+                            isLoadingMore = false,
                         )
-                    }.also { vehicleModels ->
-                        _uiStateFlow.update {
-                            State.Loaded(
-                                vehicles = vehicleModels.toPersistentList()
-                            )
-                        }
-                    }
-                },
-                onFailure = { throwable ->
-                    Log.d(TAG, "loadVehicles failure: $throwable")
-                    _uiStateFlow.update {
+                    },
+                    onFailure = {
+                        Log.d(TAG, "loadVehicles failed: $it")
                         State.Error
-                    }
-                }
-            )
+                    },
+                )
+            }
         }
     }
 
