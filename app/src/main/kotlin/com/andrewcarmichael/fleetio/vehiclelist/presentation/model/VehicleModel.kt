@@ -4,8 +4,10 @@ import androidx.annotation.StringRes
 import com.andrewcarmichael.fleetio.R.string
 
 data class VehicleModel(
-    val id: Int,
+    val id: Long,
     val name: String,
+    val description: String,
+    val imageUrl: String?,
     val type: VehicleType,
     val status: VehicleStatus,
 )

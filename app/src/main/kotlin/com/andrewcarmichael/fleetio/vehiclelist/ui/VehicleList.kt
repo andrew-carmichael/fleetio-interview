@@ -1,31 +1,49 @@
 package com.andrewcarmichael.fleetio.vehiclelist.ui
 
-import android.R
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import com.andrewcarmichael.fleetio.R.drawable
 import com.andrewcarmichael.fleetio.ui.theme.FleetioTheme
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent.NavigateToVehicleDetail
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntentHandler
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListViewModel
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.FakeVehicleData
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
@@ -89,22 +107,99 @@ private fun Loaded(
             count = uiState.vehicles.size,
             key = { uiState.vehicles[it].id }
         ) {
-            val item = uiState.vehicles[it]
-            Row(
+            val vehicle = uiState.vehicles[it]
+            VehicleRowItem(
+                onPressed = {
+                    intentHandler.handleIntent(NavigateToVehicleDetail(vehicle.id))
+                },
+                vehicleTitle = vehicle.name,
+                vehicleSubtitle = vehicle.description,
+                imageModel = vehicle.imageUrl,
+                chips = listOf("Chip 1", "Chip 2"),
                 modifier = Modifier.fillMaxWidth()
-                    .border(width = 1.dp, color = Color.Black)
-                    .clickable(
-                        onClick = {
-                            intentHandler.handleIntent(NavigateToVehicleDetail(id = item.id.toString()))
-                        }
+            )
+        }
+    }
+}
+
+@Composable
+fun VehicleRowItem(
+    onPressed: () -> Unit,
+    vehicleTitle: String,
+    vehicleSubtitle: String,
+    imageModel: Any? = null,
+    chips: List<String> = emptyList(),
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .clickable(
+                enabled = true,
+                onClick = onPressed
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(8.dp)
+                .heightIn(min = 64.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = imageModel,
+                placeholder = painterResource(drawable.local_shipping),
+                fallback = painterResource(drawable.local_shipping),
+                contentDescription = vehicleTitle,
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .border(
+                        width = 2.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(8.dp)
                     )
-                    .padding(16.dp)
-            )  {
-                Text(
-                    text = item.name
-                )
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = vehicleTitle, style = MaterialTheme.typography.titleSmall)
+                Text(text = vehicleSubtitle, style = MaterialTheme.typography.bodySmall)
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    chips.forEach { chipText ->
+                        InfoChip(
+                            text = chipText,
+                        )
+                    }
+                }
             }
         }
+    }
+}
+
+@Composable
+fun InfoChip(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        tonalElevation = 1.dp,
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+        )
     }
 }
 
@@ -116,6 +211,19 @@ private fun PreviewLoading() {
             intentHandler = {},
             uiState = VehicleListViewModel.State.Loading,
             modifier = Modifier.fillMaxSize(),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewLoaded() {
+    FleetioTheme {
+        VehicleList(
+            intentHandler = {},
+            uiState = VehicleListViewModel.State.Loaded(
+                vehicles = FakeVehicleData.vehicles.toPersistentList()
+            )
         )
     }
 }

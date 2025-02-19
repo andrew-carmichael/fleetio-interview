@@ -5,13 +5,11 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
-import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.FakeVehicleData
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleStatus
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -33,18 +31,6 @@ class VehicleListViewModel(
         loadVehicles()
     }
 
-    // TODO get rid of this
-    private fun loadFakeData() {
-        viewModelScope.launch {
-            delay(3000)
-            _uiStateFlow.update {
-                State.Loaded(
-                    vehicles = FakeVehicleData.vehicles.toPersistentList(),
-                )
-            }
-        }
-    }
-
     private fun loadVehicles() {
         viewModelScope.launch {
             vehicleApi.fetchVehicles().fold(
@@ -52,8 +38,10 @@ class VehicleListViewModel(
                     Log.d(TAG, "loadVehicles: $successResponse")
                     val models = successResponse.records.map { vehicle ->
                         VehicleModel(
-                            id = vehicle.id,
+                            id = vehicle.id.toLong(),
                             name = vehicle.name,
+                            description = "${vehicle.year} ${vehicle.make} ${vehicle.model}",
+                            imageUrl = vehicle.defaultImageUrlSmall,
                             type = VehicleType.Car,
                             status = VehicleStatus.Active
                         )
@@ -77,12 +65,13 @@ class VehicleListViewModel(
         }
     }
 
-    private fun handleNavigateToVehicleDetail(id: String) {
+    private fun handleNavigateToVehicleDetail(id: Long) {
         viewModelScope.launch {
             _sideEffectFlow.emit(VehicleListSideEffect.NavigateToVehicleDetail(id))
         }
     }
 
+    // TODO add error state
     @Immutable
     sealed interface State {
         @Immutable
@@ -105,9 +94,9 @@ fun interface VehicleListIntentHandler {
 }
 
 sealed interface VehicleListIntent {
-    data class NavigateToVehicleDetail(val id: String) : VehicleListIntent
+    data class NavigateToVehicleDetail(val id: Long) : VehicleListIntent
 }
 
 sealed interface VehicleListSideEffect {
-    data class NavigateToVehicleDetail(val id: String) : VehicleListSideEffect
+    data class NavigateToVehicleDetail(val id: Long) : VehicleListSideEffect
 }
