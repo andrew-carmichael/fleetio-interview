@@ -37,7 +37,7 @@ internal fun FleetioNavigation(
         vehicleListScreen(
             onSideEffect = { sideEffect ->
                 when (sideEffect) {
-                    is VehicleListSideEffect.NavigateToVehicleDetail -> navController.navigate(VehicleDetailScreen)
+                    is VehicleListSideEffect.NavigateToVehicleDetail -> navController.navigate(VehicleDetailScreen(vehicleId = sideEffect.id))
                 }
             }
         )

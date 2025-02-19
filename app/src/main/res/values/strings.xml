@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Fleetio</string>
 
+    <string name="errorGeneric">Oh no! Something went wrong.</string>
+
     <string name="vehicleStatusActive">Active</string>
     <string name="vehicleStatusInShop">In Shop</string>
     <string name="vehicleStatusOutOfService">Out Of Service</string>

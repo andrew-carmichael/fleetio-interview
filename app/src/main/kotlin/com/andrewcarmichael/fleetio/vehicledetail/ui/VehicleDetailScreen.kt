@@ -4,13 +4,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object VehicleDetailScreen
+data class VehicleDetailScreen(val vehicleId: Long)
 
 fun NavGraphBuilder.vehicleDetailScreen() {
-    composable<VehicleDetailScreen> {
-        VehicleDetailRoot(modifier = Modifier.fillMaxSize())
+    composable<VehicleDetailScreen> { backStackEntry ->
+        val destination: VehicleDetailScreen = backStackEntry.toRoute()
+        VehicleDetailRoot(
+            vehicleId = destination.vehicleId,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }

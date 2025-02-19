@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
+import com.andrewcarmichael.fleetio.core.data.VehicleApi
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleStatus
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleType
@@ -37,7 +37,8 @@ class VehicleListViewModel(
             vehicleApi.fetchVehicles().fold(
                 onSuccess = { successResponse ->
                     Log.d(TAG, "loadVehicles success: $successResponse")
-                    val models = successResponse.records.map { vehicle ->
+                    // TODO this mapping isn't correct exactly
+                    successResponse.records.map { vehicle ->
                         VehicleModel(
                             id = vehicle.id.toLong(),
                             name = vehicle.name,
@@ -46,11 +47,12 @@ class VehicleListViewModel(
                             type = VehicleType.Car,
                             status = VehicleStatus.Active
                         )
-                    }
-                    _uiStateFlow.update {
-                        State.Loaded(
-                            vehicles = models.toPersistentList(),
-                        )
+                    }.also { vehicleModels ->
+                        _uiStateFlow.update {
+                            State.Loaded(
+                                vehicles = vehicleModels.toPersistentList()
+                            )
+                        }
                     }
                 },
                 onFailure = { throwable ->

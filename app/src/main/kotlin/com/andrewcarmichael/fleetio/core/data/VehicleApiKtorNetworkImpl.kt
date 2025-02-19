@@ -1,8 +1,8 @@
-package com.andrewcarmichael.fleetio.vehiclelist.data
+package com.andrewcarmichael.fleetio.core.data
 
 import android.util.Log
-import com.andrewcarmichael.fleetio.vehiclelist.data.models.PaginatedVehiclesResponse
-import com.andrewcarmichael.fleetio.vehiclelist.data.models.Vehicle
+import com.andrewcarmichael.fleetio.core.data.models.PaginatedVehiclesResponse
+import com.andrewcarmichael.fleetio.core.data.models.Vehicle
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -16,7 +16,7 @@ internal class VehicleApiKtorNetworkImpl(
     override suspend fun fetchVehicle(id: Long): Result<Vehicle> {
         return runCatching {
             require(id > 0)
-            val httpResponse = httpClient.get("https://secure.fleetio.com/api/v1/vehicles/${id}")
+            val httpResponse = httpClient.get("vehicles/${id}")
             val body = httpResponse.body<Vehicle>()
             body
         }
@@ -24,7 +24,7 @@ internal class VehicleApiKtorNetworkImpl(
 
     override suspend fun fetchVehicles(page: Int, pageSize: Int): Result<PaginatedVehiclesResponse> {
         return runCatching {
-            val httpResponse = httpClient.get("https://secure.fleetio.com/api/v1/vehicles")
+            val httpResponse = httpClient.get("vehicles")
             Log.d(TAG, "fetchVehicles: ${httpResponse.bodyAsText()}")
             val body = httpResponse.body<PaginatedVehiclesResponse>()
             body
