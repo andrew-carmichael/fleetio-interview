@@ -4,11 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
 import com.andrewcarmichael.fleetio.vehiclelist.domain.FetchVehicle
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleModel
-import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleStatus
-import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

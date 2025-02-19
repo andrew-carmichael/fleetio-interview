@@ -61,7 +61,6 @@ class VehicleListViewModel(
         }
     }
 
-    // TODO add error state
     @Immutable
     sealed interface State {
         @Immutable

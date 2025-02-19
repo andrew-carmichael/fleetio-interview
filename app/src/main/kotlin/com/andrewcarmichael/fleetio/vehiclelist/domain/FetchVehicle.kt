@@ -8,13 +8,16 @@ class FetchVehicle(
     private val vehicleApi: VehicleApi,
 ) {
     suspend operator fun invoke(vehicleId: Long): Result<VehicleModel> {
-        return vehicleApi.fetchVehicle(id = vehicleId).fold(
-            onSuccess = { dataLayerModel ->
-                Result.success(dataLayerModel.toDomainModel())
-            },
-            onFailure = { throwable ->
-                Result.failure(throwable)
-            }
-        )
+        return runCatching {
+            require(vehicleId > 0)
+            vehicleApi.fetchVehicle(id = vehicleId).fold(
+                onSuccess = { dataLayerModel ->
+                    dataLayerModel.toDomainModel()
+                },
+                onFailure = { throwable ->
+                    throw throwable
+                }
+            )
+        }
     }
 }

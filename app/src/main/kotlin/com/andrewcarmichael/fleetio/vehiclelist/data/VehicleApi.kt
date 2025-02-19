@@ -8,18 +8,17 @@ interface VehicleApi {
     /**
      * Fetches a single vehicle by id
      *
-     * @param page The current page number (starting at 1).
-     * @param pageSize The number of vehicles per page.
-     * @return A [PaginatedVehiclesResponse] containing the vehicles and pagination info.
+     * @param id The id of the vehicle
+     * @return A [Result<Vehicle>] containing the vehicle.
      */
     suspend fun fetchVehicle(id: Long): Result<Vehicle>
 
     /**
      * Fetches a paginated list of vehicles from the API.
      *
-     * @param page The current page number (starting at 1).
+     * @param page The current page number.
      * @param pageSize The number of vehicles per page.
-     * @return A [PaginatedVehiclesResponse] containing the vehicles and pagination info.
+     * @return A [Result<PaginatedVehiclesResponse>] containing the vehicles and pagination info.
      */
     suspend fun fetchVehicles(page: Int = 0, pageSize: Int = 10): Result<PaginatedVehiclesResponse>
 }
