@@ -1,10 +1,14 @@
 package com.andrewcarmichael.fleetio.vehiclelist.presentation
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.andrewcarmichael.fleetio.vehiclelist.data.VehicleApi
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.FakeVehicleData
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleStatus
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleType
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.delay
@@ -15,7 +19,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class VehicleListViewModel : ViewModel(), VehicleListIntentHandler {
+class VehicleListViewModel(
+    private val vehicleApi: VehicleApi,
+) : ViewModel(), VehicleListIntentHandler {
 
     private val _uiStateFlow = MutableStateFlow<State>(State.Loading)
     val uiStateFlow = _uiStateFlow.asStateFlow()
@@ -24,9 +30,10 @@ class VehicleListViewModel : ViewModel(), VehicleListIntentHandler {
     val sideEffectFlow = _sideEffectFlow.asSharedFlow()
 
     init {
-        loadFakeData()
+        loadVehicles()
     }
 
+    // TODO get rid of this
     private fun loadFakeData() {
         viewModelScope.launch {
             delay(3000)
@@ -35,6 +42,32 @@ class VehicleListViewModel : ViewModel(), VehicleListIntentHandler {
                     vehicles = FakeVehicleData.vehicles.toPersistentList(),
                 )
             }
+        }
+    }
+
+    private fun loadVehicles() {
+        viewModelScope.launch {
+            vehicleApi.fetchVehicles().fold(
+                onSuccess = { successResponse ->
+                    Log.d(TAG, "loadVehicles: $successResponse")
+                    val models = successResponse.records.map { vehicle ->
+                        VehicleModel(
+                            id = vehicle.id,
+                            name = vehicle.name,
+                            type = VehicleType.Car,
+                            status = VehicleStatus.Active
+                        )
+                    }
+                    _uiStateFlow.update {
+                        State.Loaded(
+                            vehicles = models.toPersistentList(),
+                        )
+                    }
+                },
+                onFailure = { throwable ->
+                    Log.d(TAG, "loadVehicles: $throwable")
+                }
+            )
         }
     }
 
