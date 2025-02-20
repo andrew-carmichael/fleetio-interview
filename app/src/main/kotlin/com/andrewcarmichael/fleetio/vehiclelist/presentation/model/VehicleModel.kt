@@ -12,6 +12,8 @@ data class VehicleModel(
     val description: String?,
     val imageUrl: String?,
     val tags: List<Tag>,
+    val vin: String?,
+    val licensePlate: String?,
 )
 
 sealed interface Tag {
@@ -38,7 +40,9 @@ fun DomainModel.toPresentationModel(): VehicleModel {
         name = name,
         description = description,
         imageUrl = imageUrl,
-        tags = listOf(status.toTag(), type.toTag())
+        tags = listOf(status.toTag(), type.toTag()),
+        vin = vin,
+        licensePlate = licensePlate,
     )
 }
 

@@ -11,4 +11,9 @@
     <string name="vehicleTypeVan">Van</string>
     <string name="vehicleTypePickupTruck">Pickup Truck</string>
     <string name="vehicleTypeUnknown">Unknown</string>
+    <string name="vehicleDetailStatusLabel">Status:</string>
+    <string name="vehicleTypeLabel">Type:</string>
+    <string name="vehicleDetailVin">Vin:</string>
+    <string name="vehicleDetailLicensePlate">License Plate:</string>
+    <string name="vehicleMileageLabel">Mileage:</string>
 </resources>

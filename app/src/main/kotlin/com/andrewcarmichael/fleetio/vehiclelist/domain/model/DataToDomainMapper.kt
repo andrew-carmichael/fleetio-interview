@@ -9,7 +9,9 @@ fun DataLayerModel.toDomainModel(): VehicleModel {
         description = toDescription(),
         imageUrl = defaultImageUrlSmall,
         type = toVehicleType(),
-        status = toVehicleStatus()
+        status = toVehicleStatus(),
+        vin = vin,
+        licensePlate = licensePlate,
     )
 }
 

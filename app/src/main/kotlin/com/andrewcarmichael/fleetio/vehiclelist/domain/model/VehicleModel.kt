@@ -7,6 +7,8 @@ data class VehicleModel(
     val imageUrl: String?,
     val type: VehicleType,
     val status: VehicleStatus,
+    val vin: String? = null,
+    val licensePlate: String? = null,
 )
 
 enum class VehicleType() {
