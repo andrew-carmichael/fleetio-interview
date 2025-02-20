@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class VehicleListViewModel(
-    private val fetchVehiclePages: FetchVehiclePages,
+    fetchVehiclePages: FetchVehiclePages,
 ) : ViewModel(), VehicleListIntentHandler {
 
     private val _sideEffectFlow = MutableSharedFlow<VehicleListSideEffect>()
@@ -34,10 +34,6 @@ class VehicleListViewModel(
         viewModelScope.launch {
             _sideEffectFlow.emit(VehicleListSideEffect.NavigateToVehicleDetail(id))
         }
-    }
-
-    companion object {
-        const val TAG = "VehicleListViewModel"
     }
 }
 

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleModel as VehicleDomainModel
 
 class VehicleDetailViewModel(
-    private val vehicleId: Long,
+    vehicleId: Long,
     private val fetchVehicle: FetchVehicle,
     private val fetchLastKnownVehicleLocation: FetchLastKnownVehicleLocation,
     private val getStaticGoogleMapUrl: GetStaticGoogleMapUrl,
@@ -63,6 +63,10 @@ class VehicleDetailViewModel(
         }
     }
 
+    //
+    // Wait for a vehicle to be loaded, then use the vehicle's last known location id to fetch
+    // the location details. From there, use the location details to construct a URL for a
+    // static Google map.
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeVehicleSuccessfullyLoaded() {
         viewModelScope.launch {

@@ -1,5 +1,7 @@
 package com.andrewcarmichael.fleetio.vehiclelist.domain.model
 
+// I used ChatGPT to generate this for me. Used in early development and @Previews
+
 object FakeVehicleData {
     val vehicles = listOf(
         VehicleModel(

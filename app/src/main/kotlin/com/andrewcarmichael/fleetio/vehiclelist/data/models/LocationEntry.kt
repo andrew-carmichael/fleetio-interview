@@ -3,6 +3,8 @@ package com.andrewcarmichael.fleetio.vehiclelist.data.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// I used ChatGPT to generate this from the APIs response.
+
 @Serializable
 data class LocationEntry(
     val id: Long,
@@ -10,7 +12,7 @@ data class LocationEntry(
     val locatableType: String,
     @SerialName("locatable_id")
     val locatableId: Long,
-    val date: String, // You may use a date type with a custom serializer if needed.
+    val date: String,
     @SerialName("created_at")
     val createdAt: String,
     @SerialName("updated_at")

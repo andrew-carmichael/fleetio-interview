@@ -3,6 +3,8 @@ package com.andrewcarmichael.fleetio.vehiclelist.data.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// I used ChatGPT to generate this from the APIs response.
+
 @Serializable
 data class PaginatedVehiclesResponse(
     @SerialName("start_cursor")

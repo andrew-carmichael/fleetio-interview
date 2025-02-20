@@ -2,6 +2,8 @@ package com.andrewcarmichael.fleetio.vehiclelist.domain
 
 import com.andrewcarmichael.fleetio.core.secrets.GoogleMapsSecrets
 
+// I used ChatGPT to put together the URL for the map image.
+
 class GetStaticGoogleMapUrl(
     private val googleMapsSecrets: GoogleMapsSecrets,
 ) {

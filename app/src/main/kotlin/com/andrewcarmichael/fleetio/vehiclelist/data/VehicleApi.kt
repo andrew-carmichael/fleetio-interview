@@ -23,6 +23,12 @@ interface VehicleApi {
      */
     suspend fun fetchVehicles(cursor: String? = null, pageSize: Int = DEFAULT_PAGE_SIZE): Result<PaginatedVehiclesResponse>
 
+    /**
+     * Fetch the last known location of a vehicle.
+     * @param vehicleId The id of the vehicle
+     * @param locationEntryId The location id.
+     * @return A [Result<LocationEntry>]
+     */
     suspend fun fetchLastKnownVehicleLocation(vehicleId: Long, locationEntryId: Long): Result<LocationEntry>
 
     companion object {

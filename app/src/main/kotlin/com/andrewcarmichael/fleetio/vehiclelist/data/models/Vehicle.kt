@@ -3,6 +3,8 @@ package com.andrewcarmichael.fleetio.vehiclelist.data.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// I used ChatGPT to generate this from the APIs response.
+
 @Serializable
 data class Vehicle(
     val id: Int,
@@ -132,8 +134,6 @@ data class Vehicle(
 
     @SerialName("updated_at")
     val updatedAt: String,
-
-//    val labels: List<JsonElement> = emptyList(),
 
     @SerialName("group_ancestry")
     val groupAncestry: String? = null,
