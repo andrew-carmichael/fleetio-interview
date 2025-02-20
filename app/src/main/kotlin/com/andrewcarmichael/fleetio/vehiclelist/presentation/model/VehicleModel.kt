@@ -1,11 +1,13 @@
 package com.andrewcarmichael.fleetio.vehiclelist.presentation.model
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 import com.andrewcarmichael.fleetio.R.string
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleStatus
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleType
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleModel as DomainModel
 
+@Immutable
 data class VehicleModel(
     val id: Long,
     val name: String,
@@ -16,6 +18,7 @@ data class VehicleModel(
     val licensePlate: String?,
 )
 
+@Immutable
 sealed interface Tag {
     val displayStringRes: Int
 

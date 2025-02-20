@@ -16,4 +16,5 @@
     <string name="vehicleDetailVin">Vin:</string>
     <string name="vehicleDetailLicensePlate">License Plate:</string>
     <string name="vehicleMileageLabel">Mileage:</string>
+    <string name="openInMaps">Open In Maps</string>
 </resources>

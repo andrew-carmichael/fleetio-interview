@@ -1,12 +1,16 @@
 package com.andrewcarmichael.fleetio
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleDetailSideEffect
 import com.andrewcarmichael.fleetio.vehiclelist.ui.VehicleDetailScreen
 import com.andrewcarmichael.fleetio.vehiclelist.ui.vehicleDetailScreen
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
@@ -28,6 +32,7 @@ fun FleetioApplication(
 internal fun FleetioNavigation(
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -41,6 +46,19 @@ internal fun FleetioNavigation(
                 }
             }
         )
-        vehicleDetailScreen()
+        vehicleDetailScreen(
+            onSideEffect = { sideEffect ->
+                when (sideEffect) {
+                    is VehicleDetailSideEffect.NavigateToMap -> {
+                        context.startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("geo:${sideEffect.latitude},${sideEffect.longitude}?q=${sideEffect.latitude},${sideEffect.longitude}")
+                            )
+                        )
+                    }
+                }
+            }
+        )
     }
 }

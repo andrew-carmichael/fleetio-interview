@@ -2,6 +2,7 @@ package com.andrewcarmichael.fleetio.vehiclelist.data
 
 import android.database.Cursor
 import android.util.Log
+import com.andrewcarmichael.fleetio.vehiclelist.data.models.LocationEntry
 import com.andrewcarmichael.fleetio.vehiclelist.data.models.PaginatedVehiclesResponse
 import com.andrewcarmichael.fleetio.vehiclelist.data.models.Vehicle
 import io.ktor.client.HttpClient
@@ -35,6 +36,17 @@ internal class VehicleApiKtorNetworkImpl(
                 }
             }
             val body = httpResponse.body<PaginatedVehiclesResponse>()
+            body
+        }
+    }
+
+    override suspend fun fetchLastKnownVehicleLocation(
+        vehicleId: Long,
+        locationEntryId: Long
+    ): Result<LocationEntry> {
+        return runCatching {
+            val httpResponse = httpClient.get("vehicles/${vehicleId}/location_entries/${locationEntryId}")
+            val body = httpResponse.body<LocationEntry>()
             body
         }
     }

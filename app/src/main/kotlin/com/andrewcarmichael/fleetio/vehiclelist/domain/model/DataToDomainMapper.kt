@@ -12,6 +12,7 @@ fun DataLayerModel.toDomainModel(): VehicleModel {
         status = toVehicleStatus(),
         vin = vin,
         licensePlate = licensePlate,
+        lastKnownLocationId = currentLocationEntryId?.toLong(),
     )
 }
 

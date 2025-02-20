@@ -9,6 +9,7 @@ data class VehicleModel(
     val status: VehicleStatus,
     val vin: String? = null,
     val licensePlate: String? = null,
+    val lastKnownLocationId: Long? = null,
 )
 
 enum class VehicleType() {

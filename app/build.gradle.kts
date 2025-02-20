@@ -26,6 +26,9 @@ android {
 
         val fleetioAuthorizationToken: String = project.findProperty("FLEETIO_AUTHORIZATION_TOKEN")?.toString() ?: error("FLEETIO_AUTHORIZATION_TOKEN property is required")
         buildConfigField("String", "FLEETIO_AUTHORIZATION_TOKEN", fleetioAuthorizationToken)
+
+        val googleMapsApiKey: String = project.findProperty("GOOGLE_MAPS_API_KEY")?.toString() ?: error("GOOGLE_MAPS_API_KEY is required")
+        buildConfigField("String", "GOOGLE_MAPS_API_KEY", googleMapsApiKey)
     }
 
     buildTypes {
