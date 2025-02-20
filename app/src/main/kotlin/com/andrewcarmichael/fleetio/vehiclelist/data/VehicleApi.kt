@@ -16,9 +16,13 @@ interface VehicleApi {
     /**
      * Fetches a paginated list of vehicles from the API.
      *
-     * @param page The current page number.
+     * @param cursor The current page cursor.
      * @param pageSize The number of vehicles per page.
      * @return A [Result<PaginatedVehiclesResponse>] containing the vehicles and pagination info.
      */
-    suspend fun fetchVehicles(page: Int = 0, pageSize: Int = 10): Result<PaginatedVehiclesResponse>
+    suspend fun fetchVehicles(cursor: String? = null, pageSize: Int = DEFAULT_PAGE_SIZE): Result<PaginatedVehiclesResponse>
+
+    companion object {
+        const val DEFAULT_PAGE_SIZE = 50
+    }
 }

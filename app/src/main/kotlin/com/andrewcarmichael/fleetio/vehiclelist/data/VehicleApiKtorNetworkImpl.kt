@@ -1,11 +1,13 @@
 package com.andrewcarmichael.fleetio.vehiclelist.data
 
+import android.database.Cursor
 import android.util.Log
 import com.andrewcarmichael.fleetio.vehiclelist.data.models.PaginatedVehiclesResponse
 import com.andrewcarmichael.fleetio.vehiclelist.data.models.Vehicle
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.statement.bodyAsText
 
 internal class VehicleApiKtorNetworkImpl(
@@ -22,10 +24,16 @@ internal class VehicleApiKtorNetworkImpl(
         }
     }
 
-    override suspend fun fetchVehicles(page: Int, pageSize: Int): Result<PaginatedVehiclesResponse> {
+    override suspend fun fetchVehicles(cursor: String?, pageSize: Int): Result<PaginatedVehiclesResponse> {
         return runCatching {
-            val httpResponse = httpClient.get("vehicles")
-            Log.d(TAG, "fetchVehicles: ${httpResponse.bodyAsText()}")
+            val httpResponse = httpClient.get("vehicles") {
+                url {
+                    cursor?.let {
+                        parameter("start_cursor", it)
+                    }
+                    parameter("per_page", pageSize)
+                }
+            }
             val body = httpResponse.body<PaginatedVehiclesResponse>()
             body
         }
@@ -33,6 +41,7 @@ internal class VehicleApiKtorNetworkImpl(
 
     companion object {
         private const val TAG = "VehicleApiKtorNetworkImpl"
+        const val DEFAULT_PAGE_SIZE = 50
     }
 }
 
