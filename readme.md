@@ -2,8 +2,8 @@
 
 Thank you for the opportunity to complete the Fleet.io take home interview.
 
-![](screenshots/list_screen.png "List Screen")
-![](screenshots/detail_screen.png "Detail Screen")
+<img src="screenshots/list_screen.png" alt="List Screen" style="width:300px; height:auto;">
+<img src="screenshots/detail_screen.png" alt="Detail Screen" style="width:300px; height:auto;">
 
 If you would like to try my submission in your browser without installing on an Android device, go [here](https://appetize.io/app/b_4jrcypyomazgbehiqudnwnjzom).
 
