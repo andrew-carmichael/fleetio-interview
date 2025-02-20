@@ -43,3 +43,18 @@ Add the following lines to your `gradle.properties` file or set them as environm
 FLEETIO_ACCOUNT_TOKEN="secret"
 FLEETIO_AUTHORIZATION_TOKEN="Token secret"
 GOOGLE_MAPS_API_KEY="secret"
+
+### 2. Use the correct developer tools
+
+The application was build and tested only with:
+- Android Studio Ladybug Feature Drop | 2024.2.2 Patch 1
+- Tested with Pixel 9 API 35 emulator
+
+---
+
+## Notable facts
+- Application implemented following Google recommended Android architecture (clean architecture).
+- Application is completely dependency injected using Koin.
+- Both screens in the app have loading and error states.
+- The list screen is implemented with paging, including loading more indication.
+- The detail screen will display a map of the vehicle's last known location if defined.
