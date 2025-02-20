@@ -43,6 +43,7 @@ Add the following lines to your `gradle.properties` file or set them as environm
 FLEETIO_ACCOUNT_TOKEN="secret"
 FLEETIO_AUTHORIZATION_TOKEN="Token secret"
 GOOGLE_MAPS_API_KEY="secret"
+```
 
 ### 2. Use the correct developer tools
 
