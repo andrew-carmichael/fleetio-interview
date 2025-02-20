@@ -16,14 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.andrewcarmichael.fleetio.vehiclelist.domain.model.VehicleModel
+import com.andrewcarmichael.fleetio.R.string
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntent.NavigateToVehicleDetail
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListIntentHandler
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListSideEffect
 import com.andrewcarmichael.fleetio.vehiclelist.presentation.VehicleListViewModel
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
-import com.andrewcarmichael.fleetio.R.string
 
 @Composable
 fun VehicleListRoot(
@@ -76,10 +76,7 @@ private fun Loaded(
                     onPressed = {
                         intentHandler.handleIntent(NavigateToVehicleDetail(vehicle.id))
                     },
-                    vehicleTitle = vehicle.name,
-                    vehicleSubtitle = vehicle.description,
-                    imageModel = vehicle.imageUrl,
-                    chips = listOf("Chip 1", "Chip 2"),
+                    vehicleModel = vehicle,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -103,25 +100,5 @@ private fun Loaded(
                 is LoadState.NotLoading -> Unit
             }
         }
-    }
-}
-
-@Composable
-fun InfoChip(
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.primaryContainer,
-        tonalElevation = 1.dp,
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        )
     }
 }

@@ -45,9 +45,7 @@ fun Loaded(
     ) {
         VehicleSummary(
             onPressed = {},
-            vehicleTitle = uiState.vehicle.name,
-            vehicleSubtitle = uiState.vehicle.description,
-            imageModel = uiState.vehicle.imageUrl,
+            vehicleModel = uiState.vehicle,
             modifier = Modifier.fillMaxWidth(),
         )
     }

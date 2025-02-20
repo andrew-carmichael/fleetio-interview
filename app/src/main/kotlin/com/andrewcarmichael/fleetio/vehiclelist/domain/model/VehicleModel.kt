@@ -1,8 +1,5 @@
 package com.andrewcarmichael.fleetio.vehiclelist.domain.model
 
-import androidx.annotation.StringRes
-import com.andrewcarmichael.fleetio.R.string
-
 data class VehicleModel(
     val id: Long,
     val name: String,
@@ -12,16 +9,16 @@ data class VehicleModel(
     val status: VehicleStatus,
 )
 
-enum class VehicleType(@StringRes displayStringRes: Int) {
-    Car(string.vehicleTypeCar),
-    Van(string.vehicleTypeVan),
-    PickupTruck(string.vehicleTypePickupTruck),
-    Unknown(string.vehicleTypeUnknown)
+enum class VehicleType() {
+    Car(),
+    Van(),
+    PickupTruck(),
+    Unknown()
 }
 
-enum class VehicleStatus(@StringRes displayString: Int) {
-    Active(string.vehicleStatusActive),
-    InShop(string.vehicleStatusInShop),
-    OutOfService(string.vehicleStatusOutOfService),
-    Unknown(string.vehicleStatusUnknown),
+enum class VehicleStatus() {
+    Active(),
+    InShop(),
+    OutOfService(),
+    Unknown(),
 }

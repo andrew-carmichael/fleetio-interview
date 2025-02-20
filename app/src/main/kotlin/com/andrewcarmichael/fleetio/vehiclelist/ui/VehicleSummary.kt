@@ -21,26 +21,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.andrewcarmichael.fleetio.R.drawable
 import com.andrewcarmichael.fleetio.ui.theme.FleetioTheme
 import com.andrewcarmichael.fleetio.vehiclelist.domain.model.FakeVehicleData
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.Tag
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.VehicleModel
 
 @Composable
 fun VehicleSummary(
     onPressed: () -> Unit,
-    vehicleTitle: String,
-    vehicleSubtitle: String?,
-    imageModel: Any? = null,
-    chips: List<String> = emptyList(),
+    vehicleModel: VehicleModel,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -60,10 +61,10 @@ fun VehicleSummary(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = imageModel,
+                model = vehicleModel.imageUrl,
                 placeholder = painterResource(drawable.local_shipping),
                 fallback = painterResource(drawable.local_shipping),
-                contentDescription = vehicleTitle,
+                contentDescription = vehicleModel.name,
                 modifier = Modifier
                     .size(60.dp)
                     .clip(RoundedCornerShape(8.dp))
@@ -77,8 +78,8 @@ fun VehicleSummary(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = vehicleTitle, style = MaterialTheme.typography.titleSmall)
-                vehicleSubtitle?.let {
+                Text(text = vehicleModel.name, style = MaterialTheme.typography.titleSmall)
+                vehicleModel.description?.let {
                     Text(text = it, style = MaterialTheme.typography.bodySmall)
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -86,10 +87,10 @@ fun VehicleSummary(
                     modifier = Modifier.horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    chips.forEach { chipText ->
-                        InfoChip(
-                            text = chipText,
-                        )
+                    vehicleModel.tags.filterNot {
+                        it is Tag.VehicleStatus && it == Tag.VehicleStatus.Unknown || it is Tag.VehicleType && it == Tag.VehicleType.Unknown
+                    }.forEach { tag ->
+                        VehicleInfoChip(tag)
                     }
                 }
             }
@@ -97,22 +98,42 @@ fun VehicleSummary(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-private fun PreviewVehicleSummary() {
-    FleetioTheme {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(items = FakeVehicleData.vehicles) { vehicle ->
-                VehicleSummary(
-                    onPressed = {},
-                    vehicleTitle = vehicle.name,
-                    vehicleSubtitle = vehicle.description,
-                    imageModel = null,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
+fun VehicleInfoChip(
+    tag: Tag,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        tonalElevation = 1.dp,
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(tag.displayStringRes),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+        )
     }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//private fun PreviewVehicleSummary() {
+//    FleetioTheme {
+//        LazyColumn(
+//            modifier = Modifier.fillMaxSize()
+//        ) {
+//            items(items = FakeVehicleData.vehicles) { vehicle ->
+//                VehicleSummary(
+//                    onPressed = {},
+//                    vehicleTitle = vehicle.name,
+//                    vehicleSubtitle = vehicle.description,
+//                    imageModel = null,
+//                    modifier = Modifier.fillMaxWidth()
+//                )
+//            }
+//        }
+//    }
+//}

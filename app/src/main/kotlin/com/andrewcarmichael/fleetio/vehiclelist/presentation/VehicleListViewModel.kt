@@ -3,9 +3,12 @@ package com.andrewcarmichael.fleetio.vehiclelist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.map
 import com.andrewcarmichael.fleetio.vehiclelist.domain.FetchVehiclePages
+import com.andrewcarmichael.fleetio.vehiclelist.presentation.model.toPresentationModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class VehicleListViewModel(
@@ -15,7 +18,11 @@ class VehicleListViewModel(
     private val _sideEffectFlow = MutableSharedFlow<VehicleListSideEffect>()
     val sideEffectFlow = _sideEffectFlow.asSharedFlow()
 
-    val pagedVehicleFlow = fetchVehiclePages().cachedIn(viewModelScope)
+    val pagedVehicleFlow = fetchVehiclePages.invoke().map { pagingData ->
+        pagingData.map { domainModel ->
+            domainModel.toPresentationModel()
+        }
+    }.cachedIn(viewModelScope)
 
     override fun handleIntent(intent: VehicleListIntent) {
         when (intent) {
