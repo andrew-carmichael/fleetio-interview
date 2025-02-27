@@ -61,3 +61,4 @@ The application was build and tested only with:
 - The detail screen will display a map of the vehicle's last known location if defined. See the Toyota Prius in the demo.
 - The user can navigate from the detail screen to a map application.
 - UI @Previews exist for most of the UI.
+- Testing testing, 123.
